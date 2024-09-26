@@ -1,0 +1,194 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@300&family=Karla:wght@200..800&family=Rubik:wght@300..900&display=swap");
+@import "animate.css/animate.min.css";
+
+:root {
+  --main-color: #0aad0a;
+  --light-color: #f0f3f2;
+  --shadow: rgba(145, 158, 171, 0.2) 0px 2px 4px -1px,
+    rgba(145, 158, 171, 0.14) 0px 4px 5px 0px,
+    rgba(145, 158, 171, 0.12) 0px 1px 10px 0px;
+  --rating-color: #ffc908;
+  --border-color: #e3e3e3;
+}
+
+/* Stlye For Browser */
+::selection {
+  background-color: var(--main-color);
+  color: #ffffff;
+}
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--main-color);
+  border-radius: 30px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--light-color);
+}
+
+/*! Reset  */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+  font-family: "Rubik", sans-serif !important;
+}
+
+.active-link {
+  background-color: var(--main-color) !important;
+  color: var(--light-color) !important;
+}
+
+.rating-color {
+  color: var(--rating-color);
+}
+.cr {
+  cursor: pointer;
+}
+a,
+a:hover {
+  color: black;
+  text-decoration: none;
+}
+.font-sm {
+  font-size: 12px;
+}
+
+.font-md {
+  font-size: 14px;
+}
+.text-main {
+  color: var(--main-color);
+}
+.bg-main {
+  background-color: var(--main-color) !important;
+}
+.bg-main-light {
+  background-color: var(--light-color) !important;
+}
+.btn-main {
+  background-color: var(--main-color);
+  padding: 7px 20px;
+  border: 1px solid #ccc;
+  color: #fff;
+  transition: background-color 0.5s;
+}
+
+.btn-fav {
+  background-color: var(--light-color);
+  padding: 7px 0px;
+  border: none;
+  color: #fff;
+  transition: background-color 0.5s;
+  outline: none;
+  box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.1);
+  display: grid;
+  place-content: center center;
+}
+
+.btn-main:disabled {
+  cursor: not-allowed;
+  background-color: #8bec8b;
+}
+.btn-main:disabled:hover {
+  background-color: #8bec8b;
+}
+.btn-main:hover {
+  background-color: #11bd11;
+}
+
+/* Navbar */
+.nav-link {
+  transition: unset !important;
+  font-weight: 600;
+}
+
+/* Products*/
+.product {
+  position: relative;
+  transition: transform 0.5s ease-out, border-color 0.5s ease-out;
+  border: 1px solid transparent;
+  &:hover {
+    border-color: var(--border-color);
+  }
+  &:hover .btn-main {
+    transform: translateY(0%);
+  }
+  .product-header {
+    border-bottom: 1px solid var(--border-color);
+  }
+  .product-body {
+    h6 {
+      transition: color 0.5s;
+      &:hover {
+        color: var(--main-color);
+      }
+    }
+  }
+
+  .btn-main {
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    bottom: 0%;
+    transform: translateY(120%);
+    transition: transform 0.7s;
+  }
+}
+
+/* Container Shadow */
+.boxShadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 25px;
+}
+
+/* Animation Delays */
+.animate__animated.delay-1 {
+  animation-delay: 0.1s;
+}
+
+.animate__animated.delay-2 {
+  animation-delay: 0.15s;
+}
+
+.animate__animated.delay-3 {
+  animation-delay: 0.2s;
+}
+
+.animate__animated.delay-4 {
+  animation-delay: 0.25s;
+}
+
+@media (min-width: 768px) {
+  .boxShadow {
+    padding-left: 80px;
+  }
+}
+
+/* Form Styles */
+input {
+  padding-left: 40px !important;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #28a745 !important;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5) !important;
+  transform: translateY(-2px);
+}
+
+span {
+  top: 60%;
+  transition: all 0.3s ease;
+}

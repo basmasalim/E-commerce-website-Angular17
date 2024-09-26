@@ -1,0 +1,194 @@
+<main>
+  @if (detailsProduct) {
+  <section class="px-5">
+    <div class="container mx-lg-5 px-lg-5">
+      <div class="row justify-content-center g-4">
+        <!-- card left -->
+        <div class="col-lg-4 offset-lg-1">
+          <div class="product-imgs">
+            <div class="img-display overflow-hidden">
+              <div class="img-showcase d-flex w-100" #imgShowcase>
+                @for (img of images; track $index) {
+                <img [src]="img" alt="shoe image" class="w-100 d-block" />
+                }
+              </div>
+            </div>
+            <div class="img-select d-flex w-100">
+              @for (img of images; track $index) {
+              <div class="img-item ms-0">
+                <a
+                  [attr.data-id]="$index + 1"
+                  (click)="onImageClick($index)"
+                  class="cr"
+                >
+                  <img [src]="img" alt="shoe image" class="w-100 d-block" />
+                </a>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+        <!-- card right -->
+        <div class="col-lg-6 mt-3">
+          <div class="product-content">
+            <h2
+              class="product-title main-color text-capitalize fw-bold position-relative"
+            >
+              {{ detailsProduct.brand.name }}
+            </h2>
+            <span class="fw-semibold btn-main text-uppercase cr"
+              >visit {{ detailsProduct.brand.name }} store</span
+            >
+            <div class="product-rating mt-2">
+              <div>
+                <!-- Full stars -->
+                @for (star of [1,2,3,4,5].slice(0,
+                detailsProduct.ratingsAverage); track $index) {
+                <span>
+                  <i class="fas fa-star rating-color"></i>
+                </span>
+                }
+                <!-- Empty stars -->
+                @for (star of [1,2,3,4,5].slice(0, 5 -
+                detailsProduct.ratingsAverage); track $index) {
+                <span>
+                  <i class="fa-regular fa-star rating-color"></i>
+                </span>
+                }
+                <!-- Half star -->
+                @if (detailsProduct.ratingsAverage % 1 !== 0) {
+                <i class="fa-solid fa-star-half-stroke rating-color"></i>
+                }
+                <span class="ms-1">{{ detailsProduct.ratingsAverage }}</span>
+              </div>
+            </div>
+            @if (calculateDiscountPercentage() !== null) {
+            <div class="product-price mt-2 fw-bold fs-6 my-3">
+              <p class="last-price text-capitalize m-0">
+                old price:
+                <span class="fw-semibold">{{ detailsProduct.price }}</span>
+              </p>
+              <p class="new-price text-capitalize m-0 fw-semibold">
+                new price:
+                <span class="fw-semibold fw-semibold text-main"
+                  >{{ detailsProduct.priceAfterDiscount }}
+                  @if (calculateDiscountPercentage() !== null) {
+                  <span>({{ calculateDiscountPercentage() }}%)</span>
+                  }
+                </span>
+              </p>
+            </div>
+            }@else {
+            <div class="product-price mt-2 fw-bold fs-6 my-3">
+              <p class="text-capitalize m-0">
+                price:
+                <span class="fw-semibold text-main">{{
+                  detailsProduct.price
+                }}</span>
+              </p>
+            </div>
+            }
+
+            <div class="product-details">
+              <h3 class="text-uppercase main-color pb-1">about this item</h3>
+              <p class="fs-6 opacity-75 me-5 pe-5">
+                {{ detailsProduct.description }}
+              </p>
+              <ul class="my-2 fs-6 list-unstyled">
+                <li class="text-capitalize">
+                  title: <span>{{ detailsProduct.title }}</span>
+                </li>
+                <li class="text-capitalize">
+                  category: <span>{{ detailsProduct.category.name }}</span>
+                </li>
+                <li class="text-capitalize">
+                  quantity: <span>{{ detailsProduct.quantity }}</span>
+                </li>
+                <li class="text-capitalize">
+                  shipping area: <span>all over the world</span>
+                </li>
+                <li class="text-capitalize">shipping fee: <span>free</span></li>
+              </ul>
+            </div>
+            <div class="purchase-info my-4 row g-3">
+              <input
+                type="number"
+                min="0"
+                value="1"
+                class="form-control col-1 w-25"
+              />
+
+              <button
+                class="text-capitalize mx-2 btn-main px-2 col-6"
+                type="button"
+              >
+                <i class="fa-solid fa-cart-shopping"></i>
+
+                add to cart
+              </button>
+              <button
+                class="text-capitalize btn-fav px-3 col-1 p-0 px-lg-0"
+                type="button"
+              >
+                <i
+                  class="fa-regular fa-heart text-black-50 shadow-lg fa-xl"
+                ></i>
+              </button>
+            </div>
+            <div class="social-links d-flex align-items-center">
+              <p class="text-uppercase me-3">share at:</p>
+              <ul
+                class="list-unstyled d-flex justify-content-center align-items-center"
+              >
+                <li>
+                  <a>
+                    <i class="fa-brands fa-facebook-f text-primary cr"></i>
+                  </a>
+                </li>
+                <li>
+                  <a>
+                    <i class="fa-brands fa-instagram text-danger cr"></i>
+                  </a>
+                </li>
+                <li>
+                  <a>
+                    <i class="fa-brands fa-twitter text-primary cr"></i>
+                  </a>
+                </li>
+                <li>
+                  <a>
+                    <i class="fa-brands fa-google cr text-danger"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  } @else {
+  <div class="text-center">Loading product details...</div>
+  }
+
+  <!-- Related Products -->
+  <section class="Related px-5">
+    <h2 class="text-center">
+      <div class="containerBtn">
+        <a href="#" class="button type--C">
+          <div class="button__line"></div>
+          <div class="button__line"></div>
+          <span class="button__text">Related Products</span>
+          <div class="button__drow1"></div>
+          <div class="button__drow2"></div>
+        </a>
+      </div>
+    </h2>
+    <div class="container my-1">
+      <app-main-products
+        [productList]="productList"
+        [stockStatuses]="StockStatusList"
+      ></app-main-products>
+    </div>
+  </section>
+</main>

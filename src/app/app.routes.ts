@@ -1,0 +1,47 @@
+import { Routes } from '@angular/router';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.component';
+import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { HomeComponent } from './pages/home/home.component';
+import { CartComponent } from './pages/cart/cart.component';
+import { BrandsComponent } from './pages/brands/brands.component';
+import { CategoriesComponent } from './pages/categories/categories.component';
+import { WishlistComponent } from './pages/wishlist/wishlist.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { ProductsComponent } from './pages/products/products.component';
+import { authGuard } from './core/guards/auth.guard';
+import { logedGuard } from './core/guards/loged.guard';
+import { VerifyEmailComponent } from './pages/forgot-password/verify-email/verify-email.component';
+import { VerifyCodeComponent } from './pages/forgot-password/verify-code/verify-code.component';
+import { ResetPasswordComponent } from './pages/forgot-password/reset-password/reset-password.component';
+import { DetailsComponent } from './pages/details/details.component';
+
+
+export const routes: Routes = [
+  {
+    path: '', component: AuthLayoutComponent, canActivate: [logedGuard],
+    children: [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'login', component: LoginComponent, title: 'FreshCart-Login' },
+      { path: 'register', component: RegisterComponent, title: 'FreshCart-Register' },
+      { path: 'verifyEmail', component: VerifyEmailComponent, title: 'FreshCart-VerifyEmail' },
+      { path: 'verifyCode', component: VerifyCodeComponent, title: 'FreshCart-VerifyCode' },
+      { path: 'resetPassword', component: ResetPasswordComponent, title: 'FreshCart-ResetPassword' },
+    ]
+  },
+  {
+    path: '', component: BlankLayoutComponent, canActivate: [authGuard],
+    children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: HomeComponent, title: 'FreshCart-Home' },
+      { path: 'cart', component: CartComponent, title: 'FreshCart-Cart' },
+      { path: 'brands', component: BrandsComponent, title: 'FreshCart-Brands' },
+      { path: 'categories', component: CategoriesComponent, title: 'FreshCart-Categories' },
+      { path: 'products', component: ProductsComponent, title: 'FreshCart-Products' },
+      { path: 'favourite', component: WishlistComponent, title: 'FreshCart-Favourite' },
+      { path: 'details/:id', component: DetailsComponent, title: 'FreshCart-detailsProduct' }
+    ]
+  },
+  { path: 'notfound', component: NotfoundComponent },
+];
