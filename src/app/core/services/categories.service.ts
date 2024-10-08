@@ -15,7 +15,7 @@ export class CategoriesService {
     return this._HttpClient.get(`${environment.baseUrl}api/v1/categories`)
   }
 
-  getSpecificCategories(categoryId: string): Observable<any> {
+  getSpecificCategories(categoryId: string | null): Observable<any> {
     return this._HttpClient.get(`${environment.baseUrl}api/v1/categories/${categoryId}`)
   }
 }

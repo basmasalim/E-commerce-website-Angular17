@@ -4,7 +4,7 @@
       <div class="col-lg-6 order-lg-0 order-1 m-lg-0 mt-3">
         <ul
           #categories
-          class="switcher d-flex list-unstyled p-0"
+          class="switcher overflow-x-hidden d-flex list-unstyled p-0"
           (click)="filterCategory((selectedCategoryName = $event.target))"
         >
           <li class="active" (click)="selectedCategoryName = ''">All</li>

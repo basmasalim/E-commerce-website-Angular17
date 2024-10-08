@@ -6,17 +6,13 @@
           <img
             src="assets/images/sign-image.png"
             alt="sign up image"
-            class="w-75 animate__animated animate__fadeInRight"
+            class="w-75 fadeInRight"
             style="margin-left: 60px"
           />
         </figure>
       </div>
-      <div class="login-form col-lg-6">
-        <h2
-          class="form-title fs-1 text-center animate__animated animate__fadeInLeft"
-        >
-          Welcome back!
-        </h2>
+      <div class="login-form col-lg-6 fadeInLeft">
+        <h2 class="form-title fs-1 text-center">Welcome back!</h2>
         <form
           class="login-form"
           id="login-form"
@@ -24,9 +20,7 @@
           (ngSubmit)="loginSubmit()"
         >
           <!-- Email -->
-          <div
-            class="position-relative mb-2 animate__animated animate__fadeInLeft"
-          >
+          <div class="position-relative mb-2">
             <label for="email" class="fs-6 fw-medium py-2 text-capitalize">
               Email:
             </label>
@@ -56,9 +50,7 @@
             }
           </div>
           }
-          <div
-            class="position-relative mb-2 animate__animated animate__fadeInLeft delay-1"
-          >
+          <div class="position-relative mb-2">
             <label for="password" class="fs-6 fw-medium py-2 text-capitalize">
               Password:
             </label>
@@ -90,9 +82,7 @@
           }
 
           <!-- ForgotPassword -->
-          <div
-            class="d-block ms-auto text-end animate__animated animate__fadeInLeft"
-          >
+          <div class="d-block ms-auto text-end">
             <a
               routerLink="/verifyEmail"
               class="text-success font-md fw-semibold"
@@ -101,7 +91,7 @@
           </div>
 
           <div
-            class="d-flex justify-content-center align-items-center flex-column my-3 animate__animated animate__fadeInLeft delay-2"
+            class="d-flex justify-content-center align-items-center flex-column my-3"
           >
             <button
               class="btn-main"

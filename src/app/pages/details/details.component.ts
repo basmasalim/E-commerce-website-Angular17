@@ -1,11 +1,24 @@
-import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../core/services/products.service';
+import { CartService } from '../../core/services/cart.service';
 import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Product } from '../../core/interfaces/product';
+import { Cart } from '../../core/interfaces/cart';
 import { FilterCategoryPipe } from '../../core/pipes/filter-category.pipe';
 import { FormsModule } from '@angular/forms';
 import { MainProductsComponent } from '../../component/main-products/main-products.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-details',
@@ -17,93 +30,161 @@ import { MainProductsComponent } from '../../component/main-products/main-produc
 export class DetailsComponent implements OnInit, OnDestroy {
   private readonly _ActivatedRoute = inject(ActivatedRoute);
   private readonly _ProductsService = inject(ProductsService);
+  private readonly _CartService = inject(CartService);
+  private readonly _Renderer2 = inject(Renderer2);
+  private readonly _ToastrService = inject(ToastrService);
 
   @ViewChild('imgShowcase') imgShowcase!: ElementRef;
 
-  getSpecificProductsSub!: Subscription;
-  getAllProductSub!: Subscription;
-
-  StockStatusList: string[] = [];
-  productImages: string[] = [];
-  discountRate: string | null = null;
-  images: string[] = [];
-
+  private subscriptions: Subscription = new Subscription();
 
   productList: Product[] = [];
   detailsProduct: Product | null = null;
+  cartData: Cart = {} as Cart;
 
   imgId: number = 1;
+  StockStatusList: string[] = [];
+
   searchInput: string = '';
   selectedCategoryName: any = '';
 
 
   ngOnInit(): void {
-    this.displaySpecificProducts();
-    this.displayAllProducts();
+    this.initializeData();
   }
 
-  displaySpecificProducts(): void {
-    this.getSpecificProductsSub = this._ActivatedRoute.paramMap.subscribe({
-      next: (p) => {
-        const idProduct = p.get('id');
-        if (idProduct) {
-          this._ProductsService.getSpecificProducts(idProduct).subscribe({
-            next: (res) => {
-              this.detailsProduct = res.data;
-              if (this.detailsProduct) {
-                this.images = [...this.detailsProduct.images];
-                if (this.detailsProduct.imageCover) {
-                  this.images.push(this.detailsProduct.imageCover);
-                }
-              }
-            },
-            error: (err) => {
-              console.error(err);
+  initializeData(): void {
+    this.subscriptions.add(
+      this._ActivatedRoute.paramMap
+        .pipe(
+          switchMap((params) => {
+            const idProduct = params.get('id');
+            if (idProduct) {
+              return this._ProductsService.getSpecificProducts(idProduct);
             }
-          });
-        }
-      }
-    });
+            return [];
+          }),
+          switchMap((productRes) => {
+            this.detailsProduct = productRes?.data;
+            return this._CartService.getProductsCart();
+          })
+        )
+        .subscribe({
+          next: (cartRes) => {
+            this.cartData = cartRes.data;
+            this.displayAllProducts();
+          },
+          error: (err) => console.error(err),
+        })
+    );
   }
 
   displayAllProducts(): void {
-    this.getAllProductSub = this._ProductsService.getAllProducts().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.productList = res.data
-        this.setStockStatusBasedOnQuantity();
-      },
-      error: (err) => {
-        console.log(err);
-        console.error('DetailsComponent:', this.detailsProduct);
-
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.getAllProductSub?.unsubscribe()
-    this.getSpecificProductsSub?.unsubscribe();
+    this.subscriptions.add(
+      this._ProductsService.getAllProducts().subscribe({
+        next: (res) => {
+          this.productList = res.data;
+          this.setStockStatusBasedOnQuantity();
+          if (this.detailsProduct && this.detailsProduct.category) {
+            this.selectedCategoryName = this.detailsProduct.category.name;
+          }
+        },
+        error: (err) => console.error(err),
+      })
+    );
   }
 
   setStockStatusBasedOnQuantity(): void {
-    this.StockStatusList = this.productList.map(product =>
+    this.StockStatusList = this.productList.map((product) =>
       (product.quantity ?? 0) > 0 ? 'In Stock' : 'Out Of Stock'
     );
   }
 
-  // Called when an image thumbnail is clicked
+  addCart(id: string, el: HTMLButtonElement): void {
+    this.subscriptions.add(
+      this._CartService.addProductsToCart(id).subscribe({
+        next: (res) => {
+          if (res.status === 'success') {
+            this._ToastrService.success('Product added to cart');
+            this._Renderer2.setAttribute(el, 'disabled', 'true');
+            this.refreshCartData();
+          }
+        },
+        error: (err) => console.error(err),
+      })
+    );
+  }
+
+  refreshCartData(): void {
+    this.subscriptions.add(
+      this._CartService.getProductsCart().subscribe({
+        next: (res) => {
+          this.cartData = res.data;
+        },
+        error: (err) => console.error(err),
+      })
+    );
+  }
+
+  updateCount(id: string, count: number, el1: HTMLButtonElement, el2: HTMLButtonElement): void {
+    const item = this.cartData.products.find((product) => product.product._id === id);
+    if (item) {
+      this.toggleButtonsLoadingState(el1, el2, true);
+      item.isloadingCount = true;
+      this.subscriptions.add(
+        this._CartService.updateProductsCart(id, count).subscribe({
+          next: (res) => {
+            if (res.status === 'success') {
+              this._CartService.cartNumber.next(res.numOfCartItems);
+              this.cartData = res.data;
+              item.isloadingCount = false;
+            }
+            this.toggleButtonsLoadingState(el1, el2, false);
+          },
+          error: (err) => {
+            console.error(err);
+            this.toggleButtonsLoadingState(el1, el2, false);
+            item.isloadingCount = false;
+          },
+        })
+      );
+    }
+  }
+
+  toggleButtonsLoadingState(el1: HTMLButtonElement, el2: HTMLButtonElement, isLoading: boolean): void {
+    if (isLoading) {
+      this._Renderer2.setAttribute(el1, 'disabled', 'true');
+      this._Renderer2.setAttribute(el2, 'disabled', 'true');
+    } else {
+      this._Renderer2.removeAttribute(el1, 'disabled');
+      this._Renderer2.removeAttribute(el2, 'disabled');
+    }
+  }
+
+  isProductInCart(productId: string): boolean {
+    return this.cartData.products?.some((item) => item.product._id === productId) || false;
+  }
+
+  calculateDiscountPercentage(): string | null {
+    if (this.detailsProduct) {
+      const oldPrice = this.detailsProduct.price;
+      const newPrice = this.detailsProduct.priceAfterDiscount;
+
+      if (oldPrice && newPrice && oldPrice > 0) {
+        return (((oldPrice - newPrice) / oldPrice) * 100).toFixed(2);
+      }
+    }
+    return null;
+  }
+
   onImageClick(index: number): void {
     this.imgId = index + 1;
     this.slideImage();
   }
 
-  // Handles the sliding of images
   slideImage(): void {
-    if (this.imgShowcase && this.imgShowcase.nativeElement) {
-      const displayWidth = this.imgShowcase.nativeElement
-        .querySelector('img')
-        .clientWidth;
+    if (this.imgShowcase?.nativeElement) {
+      const displayWidth = this.imgShowcase.nativeElement.querySelector('img').clientWidth;
       this.imgShowcase.nativeElement.style.transform = `translateX(${-(this.imgId - 1) * displayWidth}px)`;
     }
   }
@@ -112,17 +193,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.slideImage();
   }
 
-  calculateDiscountPercentage(): string | null {
-    if (this.detailsProduct) {
-      const oldPrice = this.detailsProduct.price;
-      const newPrice = this.detailsProduct.priceAfterDiscount;
-
-      if (oldPrice !== undefined && newPrice !== undefined && oldPrice > 0) {
-        const discount = ((oldPrice - newPrice) / oldPrice) * 100;
-        return discount.toFixed(2);
-      }
-    }
-    return null;
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
-
 }

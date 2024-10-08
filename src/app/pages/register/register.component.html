@@ -1,12 +1,8 @@
 <section class="register d-flex align-items-center">
   <div class="container boxShadow">
     <div class="register-content row gy-3 overflow-hidden">
-      <div class="register-form col-lg-6">
-        <h2
-          class="form-title fs-1 text-center animate__animated animate__fadeInRight"
-        >
-          Let's go!
-        </h2>
+      <div class="register-form col-lg-6 fadeInRight">
+        <h2 class="form-title fs-1 text-center">Let's go!</h2>
         <form
           class="register-form"
           id="register-form"
@@ -14,9 +10,7 @@
           (ngSubmit)="registerSubmit()"
         >
           <!-- Name -->
-          <div
-            class="position-relative mb-2 animate__animated animate__fadeInRight"
-          >
+          <div class="position-relative mb-2">
             <label for="userName" class="fs-6 fw-medium py-2 text-capitalize"
               >User Name:</label
             >
@@ -27,10 +21,6 @@
               class="form-control shadow-none focus-ring-dark"
               placeholder="User Name"
               formControlName="name"
-              [ngClass]="{
-                'is-valid': !registerForm.get('name')?.errors && (registerForm.get('name')?.touched || registerForm.get('name')?.dirty),
-                'is-invalid': registerForm.get('name')?.errors && (registerForm.get('name')?.touched || registerForm.get('name')?.dirty),
-              }"
             />
             <span class="position-absolute z-3 start-0 ms-3">
               <i class="fa-regular fa-user"></i>
@@ -57,9 +47,7 @@
 
           }
           <!-- Email -->
-          <div
-            class="position-relative mb-2 animate__animated animate__fadeInRight delay-1"
-          >
+          <div class="position-relative mb-2">
             <label for="email" class="fs-6 fw-medium py-2 text-capitalize"
               >email:</label
             >
@@ -70,10 +58,6 @@
               class="form-control shadow-none focus-ring-dark"
               placeholder="Email"
               formControlName="email"
-              [ngClass]="{
-                'is-valid': !registerForm.get('email')?.errors && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty),
-                'is-invalid': registerForm.get('email')?.errors && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty),
-              }"
             />
             <span class="position-absolute z-3 start-0 ms-3">
               <i class="fa-regular fa-envelope fa-1"></i>
@@ -95,9 +79,7 @@
           }
 
           <!-- Password -->
-          <div
-            class="position-relative mb-2 animate__animated animate__fadeInRight delay-2"
-          >
+          <div class="position-relative mb-2">
             <label for="password" class="fs-6 fw-medium py-2 text-capitalize"
               >password:</label
             >
@@ -108,10 +90,6 @@
               class="form-control shadow-none focus-ring-dark"
               placeholder="Password"
               formControlName="password"
-              [ngClass]="{
-                'is-valid': !registerForm.get('password')?.errors && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty),
-                'is-invalid': registerForm.get('password')?.errors && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty),
-              }"
             />
             <span class="position-absolute z-3 start-0 ms-3">
               <i class="fa-solid fa-lock fa-1"></i>
@@ -133,9 +111,7 @@
           </div>
           }
           <!-- RePassword -->
-          <div
-            class="position-relative mb-2 animate__animated animate__fadeInRight delay-3"
-          >
+          <div class="position-relative mb-2">
             <label for="repassword" class="fs-6 fw-medium py-2 text-capitalize"
               >RePassword:</label
             >
@@ -146,10 +122,6 @@
               class="form-control shadow-none focus-ring-dark"
               placeholder="Repassword"
               formControlName="rePassword"
-              [ngClass]="{
-                'is-valid': !registerForm.getError('misMatch') && (registerForm.get('rePassword')?.touched || registerForm.get('rePassword')?.dirty),
-                'is-invalid': registerForm.getError('misMatch') && (registerForm.get('rePassword')?.touched || registerForm.get('rePassword')?.dirty),
-              }"
             />
             <span class="position-absolute z-3 start-0 ms-3">
               <i class="fa-solid fa-lock fa-1"></i>
@@ -164,9 +136,7 @@
           </div>
           }
           <!-- Phone -->
-          <div
-            class="position-relative mb-2 animate__animated animate__fadeInRight delay-4"
-          >
+          <div class="position-relative mb-2">
             <label for="phone" class="fs-6 fw-medium py-2 text-capitalize"
               >Phone:</label
             >
@@ -177,10 +147,6 @@
               class="form-control shadow-none focus-ring-dark"
               placeholder="phone"
               formControlName="phone"
-              [ngClass]="{
-                'is-valid': !registerForm.get('phone')?.errors && (registerForm.get('phone')?.touched || registerForm.get('phone')?.dirty),
-                'is-invalid': registerForm.get('phone')?.errors && (registerForm.get('phone')?.touched || registerForm.get('phone')?.dirty),
-              }"
             />
             <span class="position-absolute z-3 start-0 ms-3">
               <i class="fa-solid fa-phone"></i>
@@ -218,7 +184,7 @@
           }
           <!-- btn -->
           <div
-            class="d-flex justify-content-center align-items-center flex-column my-3 animate__animated animate__fadeInRight delay-4"
+            class="d-flex justify-content-center align-items-center flex-column my-3"
           >
             <button
               class="btn-main"
@@ -245,7 +211,7 @@
           <img
             src="assets/images/sign-image.png"
             alt="sing up image"
-            class="w-75 ms-auto animate__animated animate__fadeInLeft"
+            class="w-75 ms-auto fadeInLeft"
           />
         </figure>
       </div>

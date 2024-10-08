@@ -17,7 +17,8 @@ import { Categories } from '../../core/interfaces/categories';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private readonly _ProductsService = inject(ProductsService);
-  private readonly _CategoriesService = inject(CategoriesService)
+  private readonly _CategoriesService = inject(CategoriesService);
+
 
   productList: Product[] = [];
   categoryList: Categories[] = [];

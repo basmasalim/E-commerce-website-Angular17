@@ -1,0 +1,9 @@
+<!-- specific-category.component.html -->
+<section>
+  <app-main-products
+    [productList]="
+      productList | filterCategory : searchInput : selectedCategoryName
+    "
+    [stockStatuses]="StockStatusList"
+  ></app-main-products>
+</section>

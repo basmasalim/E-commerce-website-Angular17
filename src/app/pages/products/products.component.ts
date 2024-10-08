@@ -56,13 +56,11 @@ export class ProductsComponent {
   }
 
 
-
   filterCategory(event: any): void {
-    this.selectedCategoryName = event.innerHTML.toLowerCase(); // Set selected category name
+    this.selectedCategoryName = event.innerHTML.toLowerCase();
 
-    // If "All" is clicked, reset the category filter to show all products
     if (this.selectedCategoryName === 'all') {
-      this.selectedCategoryName = ''; // Reset to empty string to show all products
+      this.selectedCategoryName = '';
     }
 
     const liElements = this.categories.nativeElement.querySelectorAll('ul li');

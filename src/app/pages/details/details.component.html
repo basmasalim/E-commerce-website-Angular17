@@ -8,13 +8,13 @@
           <div class="product-imgs">
             <div class="img-display overflow-hidden">
               <div class="img-showcase d-flex w-100" #imgShowcase>
-                @for (img of images; track $index) {
+                @for (img of detailsProduct.images; track $index) {
                 <img [src]="img" alt="shoe image" class="w-100 d-block" />
                 }
               </div>
             </div>
             <div class="img-select d-flex w-100">
-              @for (img of images; track $index) {
+              @for (img of detailsProduct.images; track $index) {
               <div class="img-item ms-0">
                 <a
                   [attr.data-id]="$index + 1"
@@ -31,11 +31,17 @@
         <!-- card right -->
         <div class="col-lg-6 mt-3">
           <div class="product-content">
-            <h2
-              class="product-title main-color text-capitalize fw-bold position-relative"
-            >
-              {{ detailsProduct.brand.name }}
-            </h2>
+            <div class="d-flex justify-content-between align-items-center">
+              <h2
+                class="product-title main-color text-capitalize fw-bold position-relative"
+              >
+                {{ detailsProduct.brand.name }}
+              </h2>
+              <span>
+                <i class="fa-regular fa-heart text-main fa-xl cr"></i>
+              </span>
+            </div>
+
             <span class="fw-semibold btn-main text-uppercase cr"
               >visit {{ detailsProduct.brand.name }} store</span
             >
@@ -65,11 +71,11 @@
             @if (calculateDiscountPercentage() !== null) {
             <div class="product-price mt-2 fw-bold fs-6 my-3">
               <p class="last-price text-capitalize m-0">
-                old price:
+                old price:<span class="font-sm">EGP</span>
                 <span class="fw-semibold">{{ detailsProduct.price }}</span>
               </p>
               <p class="new-price text-capitalize m-0 fw-semibold">
-                new price:
+                new price:<span class="font-sm text-main">EGP</span>
                 <span class="fw-semibold fw-semibold text-main"
                   >{{ detailsProduct.priceAfterDiscount }}
                   @if (calculateDiscountPercentage() !== null) {
@@ -81,7 +87,7 @@
             }@else {
             <div class="product-price mt-2 fw-bold fs-6 my-3">
               <p class="text-capitalize m-0">
-                price:
+                price: <span class="font-sm text-main">EGP</span>
                 <span class="fw-semibold text-main">{{
                   detailsProduct.price
                 }}</span>
@@ -110,31 +116,74 @@
                 <li class="text-capitalize">shipping fee: <span>free</span></li>
               </ul>
             </div>
-            <div class="purchase-info my-4 row g-3">
-              <input
-                type="number"
-                min="0"
-                value="1"
-                class="form-control col-1 w-25"
-              />
+            <!--***** Add to cart ***** -->
+            <div class="purchase-info mb-4 mt-2 row g-3">
+              @for (item of cartData.products; track item._id) {
+              <ng-container>
+                @if(item.product._id === detailsProduct._id) {
+                <!-- Show increment and decrement buttons if the item is already in the cart -->
+                <ng-container>
+                  <div class="addRemoveItem d-flex align-items-center">
+                    <button
+                      #btnAdd
+                      class="text-main btn border-0 btnUpdate"
+                      (click)="
+                        updateCount(
+                          item.product._id,
+                          item.count + 1,
+                          btnAdd,
+                          btnRemove
+                        )
+                      "
+                    >
+                      <i class="fa-solid fa-square-plus fa-2x cr"></i>
+                    </button>
+                    <span class="mt-1 mx-1">
+                      @if (item.isloadingCount) {
+                      <i class="fa fa-spinner fa-spin fa-1x text-main mb-2"></i>
+                      }@if (!item.isloadingCount){
+                      <span class="fs-5 spin">{{ item.count }}</span>
+                      }</span
+                    >
+                    <button
+                      #btnRemove
+                      class="text-main btn btnUpdate border-0"
+                      (click)="
+                        updateCount(
+                          item.product._id,
+                          item.count - 1,
+                          btnAdd,
+                          btnRemove
+                        )
+                      "
+                    >
+                      <i class="fa-solid fa-square-minus fa-2x cr"></i>
+                    </button>
+                  </div>
+                </ng-container>
 
-              <button
-                class="text-capitalize mx-2 btn-main px-2 col-6"
-                type="button"
-              >
-                <i class="fa-solid fa-cart-shopping"></i>
+                }
+              </ng-container>
+              }
+              <!-- Show Add to Cart button only if the item is not in the cart -->
+              <ng-container>
+                @if (!isProductInCart(detailsProduct!._id)) {
+                <button
+                  class="btnAddToCart text-capitalize mx-2 btn-main px-2 col-6"
+                  type="button"
+                  (click)="addCart(detailsProduct._id, btnRemoveAdd)"
+                  #btnRemoveAdd
+                >
+                  <i class="fa-solid fa-cart-shopping"></i>
+                  add to cart
+                </button>
 
-                add to cart
-              </button>
-              <button
-                class="text-capitalize btn-fav px-3 col-1 p-0 px-lg-0"
-                type="button"
-              >
-                <i
-                  class="fa-regular fa-heart text-black-50 shadow-lg fa-xl"
-                ></i>
-              </button>
+                }
+              </ng-container>
             </div>
+
+            <!--*********************** -->
+
             <div class="social-links d-flex align-items-center">
               <p class="text-uppercase me-3">share at:</p>
               <ul
@@ -186,7 +235,9 @@
     </h2>
     <div class="container my-1">
       <app-main-products
-        [productList]="productList"
+        [productList]="
+          productList | filterCategory : searchInput : selectedCategoryName
+        "
         [stockStatuses]="StockStatusList"
       ></app-main-products>
     </div>

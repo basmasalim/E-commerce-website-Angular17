@@ -9,6 +9,7 @@ section {
   cursor: pointer;
   background-color: #eee;
   text-align: center;
+  border-radius: 5px;
   transition: all 0.5s;
 }
 .switcher li.active,
@@ -18,7 +19,6 @@ section {
 }
 input {
   padding-left: 10px !important;
-  border-radius: 0%;
 }
 
 input:focus {

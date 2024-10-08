@@ -11,9 +11,9 @@ nav {
       margin-inline: 20px;
     }
     .nav-item.dropdown .dropdown-menu {
-      display: block; /* Always display dropdown in mobile view */
+      display: block;
       opacity: 1;
-      position: static; /* Reset position */
+      position: static;
       border: 0;
       transform: translate(-80%, -10%);
       width: 100%;
@@ -44,4 +44,9 @@ nav {
 
 .dropdown-toggle::after {
   content: none;
+}
+.badge {
+  padding: 2px 3px !important;
+  font-size: 10px;
+  top: 15%;
 }

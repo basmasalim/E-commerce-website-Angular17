@@ -16,6 +16,12 @@ import { VerifyEmailComponent } from './pages/forgot-password/verify-email/verif
 import { VerifyCodeComponent } from './pages/forgot-password/verify-code/verify-code.component';
 import { ResetPasswordComponent } from './pages/forgot-password/reset-password/reset-password.component';
 import { DetailsComponent } from './pages/details/details.component';
+import { AllordersComponent } from './pages/allorders/allorders.component';
+import { PaymentComponent } from './pages/payment/payment.component';
+import { SpecificOrderComponent } from './pages/specific-order/specific-order.component';
+import { SpecificCategoryComponent } from './component/specific-category/specific-category.component';
+
+
 
 
 export const routes: Routes = [
@@ -38,9 +44,13 @@ export const routes: Routes = [
       { path: 'cart', component: CartComponent, title: 'FreshCart-Cart' },
       { path: 'brands', component: BrandsComponent, title: 'FreshCart-Brands' },
       { path: 'categories', component: CategoriesComponent, title: 'FreshCart-Categories' },
+      { path: 'specificCategory', component: SpecificCategoryComponent, title: 'FreshCart-SpecificCategory' },
       { path: 'products', component: ProductsComponent, title: 'FreshCart-Products' },
       { path: 'favourite', component: WishlistComponent, title: 'FreshCart-Favourite' },
-      { path: 'details/:id', component: DetailsComponent, title: 'FreshCart-detailsProduct' }
+      { path: 'details/:id', component: DetailsComponent, title: 'FreshCart-DetailsProduct' },
+      { path: 'allorders', component: AllordersComponent, title: 'FreshCart-Allorders' },
+      { path: 'payment/:id', component: PaymentComponent, title: 'FreshCart-Payment' },
+      { path: 'specifcOrder/:id', component: SpecificOrderComponent, title: 'FreshCart-SpecifcOrder' },
     ]
   },
   { path: 'notfound', component: NotfoundComponent },
