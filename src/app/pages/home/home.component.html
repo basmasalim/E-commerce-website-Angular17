@@ -33,7 +33,10 @@
     >
       @for (category of categoryList; track $index) {
       <swiper-slide>
-        <figure class="main-border mx-1 cr position-relative overflow-hidden">
+        <figure
+          class="main-border mx-1 cr position-relative overflow-hidden"
+          [routerLink]="['/specificCategory', category._id]"
+        >
           <img
             [src]="category.image"
             [alt]="category.name"

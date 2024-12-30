@@ -5,11 +5,12 @@ import { Subscription } from 'rxjs';
 import { MainProductsComponent } from '../../component/main-products/main-products.component';
 import { CategoriesService } from '../../core/services/categories.service';
 import { Categories } from '../../core/interfaces/categories';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MainProductsComponent],
+  imports: [MainProductsComponent, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

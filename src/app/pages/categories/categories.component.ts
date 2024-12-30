@@ -17,15 +17,17 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   categoryList: Categories[] = [];
 
   ngOnInit(): void {
-    this._CategoriesService.getAllCategories().subscribe({
+    this.getAllCategories()
+  }
+  ngOnDestroy(): void {
+    this.getAllCategoriesSub?.unsubscribe()
+  }
+  getAllCategories(): void {
+    this.getAllCategoriesSub = this._CategoriesService.getAllCategories().subscribe({
       next: (res) => {
         this.categoryList = res.data
       }
     })
-  }
-
-  ngOnDestroy(): void {
-    this.getAllCategoriesSub?.unsubscribe()
   }
 
 }

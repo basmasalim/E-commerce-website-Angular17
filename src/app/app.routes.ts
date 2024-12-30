@@ -20,6 +20,7 @@ import { AllordersComponent } from './pages/allorders/allorders.component';
 import { PaymentComponent } from './pages/payment/payment.component';
 import { SpecificOrderComponent } from './pages/specific-order/specific-order.component';
 import { SpecificCategoryComponent } from './component/specific-category/specific-category.component';
+import { SpecificBrandComponent } from './component/specific-brand/specific-brand.component';
 
 
 
@@ -44,7 +45,8 @@ export const routes: Routes = [
       { path: 'cart', component: CartComponent, title: 'FreshCart-Cart' },
       { path: 'brands', component: BrandsComponent, title: 'FreshCart-Brands' },
       { path: 'categories', component: CategoriesComponent, title: 'FreshCart-Categories' },
-      { path: 'specificCategory', component: SpecificCategoryComponent, title: 'FreshCart-SpecificCategory' },
+      { path: 'specificCategory/:id', component: SpecificCategoryComponent, title: 'FreshCart-SpecificCategory' },
+      { path: 'SpecificBrand/:id', component: SpecificBrandComponent, title: 'FreshCart-SpecificBrand' },
       { path: 'products', component: ProductsComponent, title: 'FreshCart-Products' },
       { path: 'favourite', component: WishlistComponent, title: 'FreshCart-Favourite' },
       { path: 'details/:id', component: DetailsComponent, title: 'FreshCart-DetailsProduct' },

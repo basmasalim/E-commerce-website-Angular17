@@ -35,7 +35,7 @@ export interface Category {
 
 export interface Brand {
   _id: string
-  name?: string
+  name: string
   slug: string
   image: string
 }
