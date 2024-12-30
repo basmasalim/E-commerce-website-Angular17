@@ -92,8 +92,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
           if (this.detailsProduct && this.detailsProduct.category) {
             this.selectedCategoryName = this.detailsProduct.category.name;
           }
-        },
-        error: (err) => console.error(err),
+        }
       })
     );
   }
@@ -113,8 +112,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
             this._Renderer2.setAttribute(el, 'disabled', 'true');
             this.refreshCartData();
           }
-        },
-        error: (err) => console.error(err),
+        }
       })
     );
   }

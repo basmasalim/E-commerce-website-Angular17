@@ -37,9 +37,6 @@ export class ProductsComponent {
       next: (res) => {
         this.productList = res.data
         this.setStockStatusBasedOnQuantity();
-      },
-      error: (err) => {
-        console.log(err);
       }
     });
   }

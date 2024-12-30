@@ -56,7 +56,6 @@ export class CartComponent implements OnInit, OnDestroy {
             this.cartData = res.data
           }
           item.isloading = false
-
         },
         error: (err) => {
           console.log(err);
@@ -64,8 +63,6 @@ export class CartComponent implements OnInit, OnDestroy {
         }
       });
     }
-
-
   }
 
   updateCount(id: string, count: number, el1: HTMLButtonElement, el2: HTMLButtonElement): void {

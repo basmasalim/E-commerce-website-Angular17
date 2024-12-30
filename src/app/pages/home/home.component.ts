@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   private readonly _ProductsService = inject(ProductsService);
   private readonly _CategoriesService = inject(CategoriesService);
 
-
   productList: Product[] = [];
   categoryList: Categories[] = [];
   StockStatusList: string[] = [];
@@ -40,18 +39,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       next: (res) => {
         this.productList = res.data
         this.setStockStatusBasedOnQuantity();
-      },
-      error: (err) => {
-        console.log(err);
       }
     })
     // getAllCategories
     this._CategoriesService.getAllCategories().subscribe({
       next: (res) => {
         this.categoryList = res.data
-      },
-      error: (err) => {
-        console.log(err);
       }
     })
   }

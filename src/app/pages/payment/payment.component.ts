@@ -63,9 +63,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
         if (res.status === 'success') {
           window.open(res.session.url); // Redirect to payment page
         }
-      },
-      error: (err) => {
-        console.log(err);
       }
     });
   }
@@ -75,10 +72,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
       next: (res) => {
         console.log(res);
         this._Router.navigate(['/allorders']); // Redirect to order summary
-
-      },
-      error: (err) => {
-        console.log(err);
       }
     });
   }

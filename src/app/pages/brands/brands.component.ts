@@ -31,6 +31,4 @@ export class BrandsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.getAllBrandsSub?.unsubscribe()
   }
-
-
 }

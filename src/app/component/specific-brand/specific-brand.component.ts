@@ -58,7 +58,6 @@ export class SpecificBrandComponent implements OnInit, OnDestroy {
     this.displayProductSub = this._ProductsService.getAllProducts().subscribe({
       next: (res) => {
         this.productList = res.data
-        console.log(res.data);
       }
     })
   }
