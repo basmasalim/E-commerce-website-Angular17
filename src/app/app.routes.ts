@@ -1,40 +1,20 @@
 import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.component';
-import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { HomeComponent } from './pages/home/home.component';
-import { CartComponent } from './pages/cart/cart.component';
-import { BrandsComponent } from './pages/brands/brands.component';
-import { CategoriesComponent } from './pages/categories/categories.component';
-import { WishlistComponent } from './pages/wishlist/wishlist.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { ProductsComponent } from './pages/products/products.component';
 import { authGuard } from './core/guards/auth.guard';
 import { logedGuard } from './core/guards/loged.guard';
-import { VerifyEmailComponent } from './pages/forgot-password/verify-email/verify-email.component';
-import { VerifyCodeComponent } from './pages/forgot-password/verify-code/verify-code.component';
-import { ResetPasswordComponent } from './pages/forgot-password/reset-password/reset-password.component';
-import { DetailsComponent } from './pages/details/details.component';
-import { AllordersComponent } from './pages/allorders/allorders.component';
-import { PaymentComponent } from './pages/payment/payment.component';
-import { SpecificOrderComponent } from './pages/specific-order/specific-order.component';
-import { SpecificCategoryComponent } from './component/specific-category/specific-category.component';
-import { SpecificBrandComponent } from './component/specific-brand/specific-brand.component';
-
-
-
 
 export const routes: Routes = [
   {
     path: '', component: AuthLayoutComponent, canActivate: [logedGuard],
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: 'login', component: LoginComponent, title: 'FreshCart-Login' },
-      { path: 'register', component: RegisterComponent, title: 'FreshCart-Register' },
-      { path: 'verifyEmail', component: VerifyEmailComponent, title: 'FreshCart-VerifyEmail' },
-      { path: 'verifyCode', component: VerifyCodeComponent, title: 'FreshCart-VerifyCode' },
-      { path: 'resetPassword', component: ResetPasswordComponent, title: 'FreshCart-ResetPassword' },
+      { path: 'login', loadComponent: () => import('./pages/login/login.component').then((c) => c.LoginComponent), title: 'FreshCart-Login' },
+      { path: 'register', loadComponent: () => import('./pages/register/register.component').then((c) => c.RegisterComponent), title: 'FreshCart-Register' },
+      { path: 'verifyEmail', loadComponent: () => import('./pages/forgot-password/verify-email/verify-email.component').then((c) => c.VerifyEmailComponent), title: 'FreshCart-VerifyEmail' },
+      { path: 'verifyCode', loadComponent: () => import('./pages/forgot-password/verify-code/verify-code.component').then((c) => c.VerifyCodeComponent), title: 'FreshCart-VerifyCode' },
+      { path: 'resetPassword', loadComponent: () => import('./pages/forgot-password/reset-password/reset-password.component').then((c) => c.ResetPasswordComponent), title: 'FreshCart-ResetPassword' },
     ]
   },
   {
@@ -42,18 +22,18 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent, title: 'FreshCart-Home' },
-      { path: 'cart', component: CartComponent, title: 'FreshCart-Cart' },
-      { path: 'brands', component: BrandsComponent, title: 'FreshCart-Brands' },
-      { path: 'categories', component: CategoriesComponent, title: 'FreshCart-Categories' },
-      { path: 'specificCategory/:id', component: SpecificCategoryComponent, title: 'FreshCart-SpecificCategory' },
-      { path: 'SpecificBrand/:id', component: SpecificBrandComponent, title: 'FreshCart-SpecificBrand' },
-      { path: 'products', component: ProductsComponent, title: 'FreshCart-Products' },
-      { path: 'favourite', component: WishlistComponent, title: 'FreshCart-Favourite' },
-      { path: 'details/:id', component: DetailsComponent, title: 'FreshCart-DetailsProduct' },
-      { path: 'allorders', component: AllordersComponent, title: 'FreshCart-Allorders' },
-      { path: 'payment/:id', component: PaymentComponent, title: 'FreshCart-Payment' },
-      { path: 'specifcOrder/:id', component: SpecificOrderComponent, title: 'FreshCart-SpecifcOrder' },
+      { path: 'cart', loadComponent: () => import('./pages/cart/cart.component').then((c) => c.CartComponent), title: 'FreshCart-Cart' },
+      { path: 'brands', loadComponent: () => import('./pages/brands/brands.component').then((c) => c.BrandsComponent), title: 'FreshCart-Brands' },
+      { path: 'categories', loadComponent: () => import('./pages/categories/categories.component').then((c) => c.CategoriesComponent), title: 'FreshCart-Categories' },
+      { path: 'specificCategory/:id', loadComponent: () => import('./component/specific-category/specific-category.component').then((c) => c.SpecificCategoryComponent), title: 'FreshCart-SpecificCategory' },
+      { path: 'SpecificBrand/:id', loadComponent: () => import('./component/specific-brand/specific-brand.component').then((c) => c.SpecificBrandComponent), title: 'FreshCart-SpecificBrand' },
+      { path: 'products', loadComponent: () => import('./pages/products/products.component').then((c) => c.ProductsComponent), title: 'FreshCart-Products' },
+      { path: 'favourite', loadComponent: () => import('./pages/wishlist/wishlist.component').then((c) => c.WishlistComponent), title: 'FreshCart-Favourite' },
+      { path: 'details/:id', loadComponent: () => import('./pages/details/details.component').then((c) => c.DetailsComponent), title: 'FreshCart-DetailsProduct' },
+      { path: 'allorders', loadChildren: () => import('./pages/allorders/allorders.component').then((c) => c.AllordersComponent), title: 'FreshCart-Allorders' },
+      { path: 'payment/:id', loadComponent: () => import('./pages/payment/payment.component').then((c) => c.PaymentComponent), title: 'FreshCart-Payment' },
+      { path: 'specifcOrder/:id', loadComponent: () => import('./pages/specific-order/specific-order.component').then((c) => c.SpecificOrderComponent), title: 'FreshCart-SpecifcOrder' },
     ]
   },
-  { path: 'notfound', component: NotfoundComponent },
+  { path: 'notfound', loadComponent: () => import('./pages/notfound/notfound.component').then((c) => c.NotfoundComponent) },
 ];
