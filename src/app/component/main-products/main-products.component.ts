@@ -5,6 +5,7 @@ import { CartService } from '../../core/services/cart.service';
 import { Subscription } from 'rxjs';
 import { Cart } from '../../core/interfaces/cart';
 import { ToastrService } from 'ngx-toastr';
+import { WishlistService } from '../../core/services/wishlist.service';
 
 @Component({
   selector: 'app-main-products',
@@ -17,6 +18,7 @@ export class MainProductsComponent implements OnInit, OnDestroy {
   private readonly _CartService = inject(CartService);
   private readonly _Renderer2 = inject(Renderer2);
   private readonly _ToastrService = inject(ToastrService);
+  private readonly _WishlistService = inject(WishlistService);
 
   private subscriptions: Subscription = new Subscription();
 
@@ -25,8 +27,11 @@ export class MainProductsComponent implements OnInit, OnDestroy {
 
   cartData: Cart = {} as Cart;
 
+  wishlistData: string[] = []
+
   ngOnInit(): void {
     this.refreshCartData();
+    this.getFav()
   }
 
   // Check if the product is in the cart
@@ -117,6 +122,44 @@ export class MainProductsComponent implements OnInit, OnDestroy {
         error: (err) => console.error(err),
       })
     );
+  }
+
+  addFav(id: string): void {
+    this._WishlistService.addProductsToWishlist(id).subscribe({
+      next: (res) => {
+        if (res.status === "success") {
+          this._ToastrService.success('❤️ Product added to Wishlist');
+          this.wishlistData = res.data
+          this._WishlistService.favNumber.next(res.data.length)
+        }
+      }
+    })
+  }
+
+  removeFav(id: string): void {
+    this._WishlistService.removeProductsWishlist(id).subscribe({
+      next: (res) => {
+        if (res.status === "success") {
+          console.log(res);
+          this._ToastrService.error(`💔${res.message}`);
+          this.wishlistData = res.data
+          this._WishlistService.favNumber.next(res.data.length)
+          const newProductsData = this.productList.filter((item: any) => this.wishlistData.includes(item._id))
+          this.productList = newProductsData
+        }
+
+
+      }
+    })
+  }
+
+  getFav(): void {
+    this._WishlistService.getProductsWishlist().subscribe({
+      next: (res) => {
+        const newData = res.data.map((item: any) => item._id)
+        this.wishlistData = newData
+      }
+    })
   }
 
   // Clean up subscriptions

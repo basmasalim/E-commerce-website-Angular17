@@ -38,7 +38,18 @@
                 {{ detailsProduct.brand.name }}
               </h2>
               <span>
-                <i class="fa-regular fa-heart text-main fa-xl cr"></i>
+                @if (!wishlistData.includes(detailsProduct._id)) {
+                <i
+                  (click)="addFav(detailsProduct._id)"
+                  class="fa-regular fa-heart text-main fa-xl cr"
+                ></i>
+                } @if (wishlistData.includes(detailsProduct._id)) {
+                <i
+                  (click)="removeFav(detailsProduct._id)"
+                  class="fa-solid fa-heart text-main fa-xl cr"
+                ></i>
+
+                }
               </span>
             </div>
 

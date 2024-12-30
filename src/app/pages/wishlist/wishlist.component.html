@@ -1,1 +1,7 @@
-<p>wishlist works!</p>
+<section class="container my-1">
+  <h2 class="text-uppercase">Wishlist</h2>
+  <app-main-products
+    [productList]="wishlistData"
+    [stockStatuses]="StockStatusList"
+  ></app-main-products>
+</section>
