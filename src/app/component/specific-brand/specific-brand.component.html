@@ -24,11 +24,16 @@
     </div>
   </div>
   <hr />
+  @if ((productList | filterBrands : searchInput : specificBrands.name).length
+  >0){
   <app-main-products
     [productList]="
       productList | filterBrands : searchInput : specificBrands.name
     "
     [stockStatuses]="StockStatusList"
   ></app-main-products>
+  }@else {
+  <app-empty-page></app-empty-page>
+  }
 </section>
 }

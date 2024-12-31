@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-notfound',
+  selector: 'app-empty-page',
   standalone: true,
   imports: [RouterLink],
-  templateUrl: './notfound.component.html',
-  styleUrl: './notfound.component.scss'
+  templateUrl: './empty-page.component.html',
+  styleUrl: './empty-page.component.scss'
 })
-export class NotfoundComponent {
+export class EmptyPageComponent {
+
 }

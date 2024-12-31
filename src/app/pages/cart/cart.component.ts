@@ -4,11 +4,12 @@ import { Subscription } from 'rxjs';
 import { Cart } from '../../core/interfaces/cart';
 import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { EmptyPageComponent } from '../../component/empty-page/empty-page.component';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, EmptyPageComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })

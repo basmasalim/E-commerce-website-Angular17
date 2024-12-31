@@ -7,11 +7,12 @@ import { CategoriesService } from '../../core/services/categories.service';
 import { Categories } from '../../core/interfaces/categories';
 import { ProductsService } from '../../core/services/products.service';
 import { Subscription } from 'rxjs';
+import { EmptyPageComponent } from '../empty-page/empty-page.component';
 
 @Component({
   selector: 'app-specific-category',
   standalone: true,
-  imports: [MainProductsComponent, FilterCategoryPipe],
+  imports: [MainProductsComponent, FilterCategoryPipe, EmptyPageComponent],
   templateUrl: './specific-category.component.html',
   styleUrl: './specific-category.component.scss'
 })
@@ -60,6 +61,7 @@ export class SpecificCategoryComponent implements OnInit, OnDestroy {
     this.displayProductSub = this._ProductsService.getAllProducts().subscribe({
       next: (res) => {
         this.productList = res.data
+        console.log(res.data);
       }
     })
   }

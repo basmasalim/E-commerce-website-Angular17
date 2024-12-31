@@ -30,11 +30,16 @@
     </div>
   </div>
   <hr />
+  @if ((productList | filterCategory : searchInput :
+  specificCategory.name).length > 0) {
   <app-main-products
     [productList]="
       productList | filterCategory : searchInput : specificCategory.name
     "
     [stockStatuses]="StockStatusList"
   ></app-main-products>
+  }@else {
+  <app-empty-page></app-empty-page>
+  }
 </section>
 }

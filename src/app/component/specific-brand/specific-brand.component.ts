@@ -6,11 +6,12 @@ import { BrandsService } from '../../core/services/brands.service';
 import { Subscription } from 'rxjs';
 import { MainProductsComponent } from '../main-products/main-products.component';
 import { FilterBrandsPipe } from '../../core/pipes/filter-brands.pipe';
+import { EmptyPageComponent } from '../empty-page/empty-page.component';
 
 @Component({
   selector: 'app-specific-brand',
   standalone: true,
-  imports: [MainProductsComponent, FilterBrandsPipe],
+  imports: [MainProductsComponent, FilterBrandsPipe, EmptyPageComponent],
   templateUrl: './specific-brand.component.html',
   styleUrl: './specific-brand.component.scss'
 })

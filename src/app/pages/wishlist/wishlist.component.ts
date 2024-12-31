@@ -4,11 +4,12 @@ import { Subscription } from 'rxjs';
 import { Product } from '../../core/interfaces/product';
 import { MainProductsComponent } from '../../component/main-products/main-products.component';
 import { ToastrService } from 'ngx-toastr';
+import { EmptyPageComponent } from '../../component/empty-page/empty-page.component';
 
 @Component({
   selector: 'app-wishlist',
   standalone: true,
-  imports: [MainProductsComponent],
+  imports: [MainProductsComponent, EmptyPageComponent],
   templateUrl: './wishlist.component.html',
   styleUrl: './wishlist.component.scss'
 })
@@ -28,9 +29,6 @@ export class WishlistComponent implements OnInit, OnDestroy {
         if (res.status === "success") {
           this.wishlistData = res.data
         }
-      },
-      error: (err) => {
-        console.log(err);
       }
     })
   }
@@ -54,7 +52,6 @@ export class WishlistComponent implements OnInit, OnDestroy {
           const newProductsData = this.productList.filter((item: any) => this.wishlistData.includes(item._id))
           this.productList = newProductsData
         }
-
       }
     })
   }

@@ -35,5 +35,5 @@ export const routes: Routes = [
       { path: 'specifcOrder/:id', loadComponent: () => import('./pages/specific-order/specific-order.component').then((c) => c.SpecificOrderComponent), title: 'FreshCart-SpecifcOrder' },
     ]
   },
-  { path: 'notfound', loadComponent: () => import('./pages/notfound/notfound.component').then((c) => c.NotfoundComponent) },
+  { path: '**', loadComponent: () => import('./pages/notfound/notfound.component').then((c) => c.NotfoundComponent) },
 ];
